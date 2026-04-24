@@ -6,6 +6,7 @@
 """
 
 import os
+import random
 import discord
 from discord import app_commands
 from discord.ext import commands
@@ -18,78 +19,100 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ──────────────────────────────────────────
-BASE_DIR  = Path(__file__).parent        # bot.py 있는 폴더 기준
-KR_DIR    = BASE_DIR / "KR_json"         # 대사 텍스트 json 폴더
-VOICE_DIR = BASE_DIR / "json"            # 음성파일 정보 json 폴더
+BASE_DIR       = Path(__file__).parent
+KR_DIR         = BASE_DIR / "KR_json"         # 메인스토리 대사
+VOICE_DIR      = BASE_DIR / "json"            # 메인스토리 음성
+DTALE_KR_DIR   = BASE_DIR / "Dtales_KRjson"   # .5장/기타 대사
+DTALE_V_DIR    = BASE_DIR / "Dtales_json"     # .5장/기타 음성
 # ──────────────────────────────────────────
 
 RESULTS_PER_PAGE = 5
 
-# 전체 대사 데이터 저장소
+# ★ 여기에 원하는 문장 추가하면 됨
+FOOTER_MESSAGES = [
+    "여기에 문장 입력",
+    "여기에 문장 입력",
+    "여기에 문장 입력",
+]
+
 search_data: List[Dict] = []
 
 
+# ── 챕터 추출 ────────────────────────────────
 def get_chapter(key: str) -> str:
-    """파일명에서 장 번호 추출
-    - 1D101A  → "1"   (1~8장 형식)
-    - S901B   → "9"   (9장 형식)
+    """메인스토리 파일명에서 장 번호 추출
+    1D101A → "1" / S901B → "9"
     """
-    m = re.match(r'^(\d+)D', key)       # 1D, 8D 등
+    m = re.match(r'^(\d+)D', key)
     if m:
         return m.group(1)
-    m = re.match(r'^S(\d)', key)        # S9...
+    m = re.match(r'^S(\d)', key)
     if m:
         return m.group(1)
     return "0"
 
 
+def get_dtale_chapter(key: str) -> str:
+    """Dtales 파일명에서 챕터 추출
+    E301A → "3.5" / E901B → "9.5" / E000X → "기타"
+    """
+    m = re.match(r'^E([1-9])\d\d', key)
+    if m:
+        return f"{m.group(1)}.5"
+    return "기타"
+
+
 # ── 데이터 로드 ──────────────────────────────
 def load_all_data():
-    """봇 시작 시 모든 json을 메모리에 로드"""
+    # ── 메인스토리 로드
     for kr_file in sorted(KR_DIR.glob("KR_*.json")):
-        key = kr_file.stem[3:]   # "KR_1D101A" → "1D101A", "KR_S901B" → "S901B"
+        key     = kr_file.stem[3:]
         chapter = get_chapter(key)
+        _load_file(kr_file, VOICE_DIR / f"{key}.json", key, chapter)
 
-        # ── KR json 로드
-        try:
-            with open(kr_file, encoding="utf-8") as f:
-                kr_list = json.load(f)["dataList"]
-        except Exception as e:
-            print(f"[경고] {kr_file.name} 로드 실패: {e}")
-            continue
-
-        # ── 음성 json 로드 (없으면 빈 dict)
-        voice_file = VOICE_DIR / f"{key}.json"
-        voice_map: Dict = {}
-        if voice_file.exists():
-            try:
-                with open(voice_file, encoding="utf-8") as f:
-                    voice_list = json.load(f)["dataList"]
-                voice_map = {item["id"]: item for item in voice_list if "id" in item}
-            except Exception as e:
-                print(f"[경고] {voice_file.name} 로드 실패: {e}")
-
-        # ── 두 json을 id 기준으로 합쳐서 저장
-        for item in kr_list:
-            if "id" not in item or "content" not in item:
-                continue
-            vid = item["id"]
-            voice_entry = voice_map.get(vid, {})
-            search_data.append({
-                "scene":   key,
-                "chapter": chapter,
-                "id":      vid,
-                "model":   item.get("model", ""),
-                "content": item["content"],
-                "place":   item.get("place", ""),
-                "voice":   voice_entry.get("voice", "")
-            })
+    # ── .5장 / 기타 로드
+    for kr_file in sorted(DTALE_KR_DIR.glob("KR_*.json")):
+        key     = kr_file.stem[3:]
+        chapter = get_dtale_chapter(key)
+        _load_file(kr_file, DTALE_V_DIR / f"{key}.json", key, chapter)
 
     print(f"[봇] {len(search_data)}개 대사 로드 완료")
 
 
+def _load_file(kr_file: Path, voice_file: Path, key: str, chapter: str):
+    try:
+        with open(kr_file, encoding="utf-8") as f:
+            kr_list = json.load(f)["dataList"]
+    except Exception as e:
+        print(f"[경고] {kr_file.name} 로드 실패: {e}")
+        return
+
+    voice_map: Dict = {}
+    if voice_file.exists():
+        try:
+            with open(voice_file, encoding="utf-8") as f:
+                voice_list = json.load(f)["dataList"]
+            voice_map = {item["id"]: item for item in voice_list if "id" in item}
+        except Exception as e:
+            print(f"[경고] {voice_file.name} 로드 실패: {e}")
+
+    for item in kr_list:
+        if "id" not in item or "content" not in item:
+            continue
+        vid = item["id"]
+        voice_entry = voice_map.get(vid, {})
+        search_data.append({
+            "scene":   key,
+            "chapter": chapter,
+            "id":      vid,
+            "model":   item.get("model", ""),
+            "content": item["content"],
+            "place":   item.get("place", ""),
+            "voice":   voice_entry.get("voice", "")
+        })
+
+
 def do_search(keyword: str, chapter: Optional[str]) -> List[Dict]:
-    """키워드 + 장 필터로 대사 검색"""
     results = []
     kw = keyword.lower()
     for entry in search_data:
@@ -142,7 +165,7 @@ class SearchView(discord.ui.View):
                 inline=False
             )
 
-        embed.set_footer(text="림버스 컴퍼니 대사 검색봇")
+        embed.set_footer(text=random.choice(FOOTER_MESSAGES))
         return embed
 
     @discord.ui.button(label="◀ 이전", style=discord.ButtonStyle.secondary)
@@ -173,18 +196,50 @@ async def on_ready():
 
 @bot.tree.command(name="대사검색", description="림버스 컴퍼니 대사를 검색합니다")
 @app_commands.describe(
-    키워드="검색할 단어 또는 문장 (예: 홍원에 필요한)",
-    장="칸토 번호 (예: 1, 2, 8 … 비워두면 전체 검색)"
+    키워드="검색할 단어 또는 문장",
+    장="검색 범위 (비워두면 전체 검색)"
 )
+@app_commands.choices(장=[
+    app_commands.Choice(name="── 메인 스토리 ──", value="sep1"),
+    app_commands.Choice(name="전체",              value="all"),
+    app_commands.Choice(name="1장",               value="1"),
+    app_commands.Choice(name="2장",               value="2"),
+    app_commands.Choice(name="3장",               value="3"),
+    app_commands.Choice(name="4장",               value="4"),
+    app_commands.Choice(name="5장",               value="5"),
+    app_commands.Choice(name="6장",               value="6"),
+    app_commands.Choice(name="7장",               value="7"),
+    app_commands.Choice(name="8장",               value="8"),
+    app_commands.Choice(name="9장",               value="9"),
+    app_commands.Choice(name="── 인터발로 ──",    value="sep2"),
+    app_commands.Choice(name="3.5장 헬스 치킨",   value="3.5"),
+    app_commands.Choice(name="4.5장 우.미.다",    value="4.5"),
+    app_commands.Choice(name="5.5장",             value="5.5"),
+    app_commands.Choice(name="6.5장",             value="6.5"),
+    app_commands.Choice(name="7.5장",             value="7.5"),
+    app_commands.Choice(name="8.5장",             value="8.5"),
+    app_commands.Choice(name="9.5장",             value="9.5"),
+    app_commands.Choice(name="── 기타 ──",        value="sep3"),
+    app_commands.Choice(name="기타 (미니스토리/발푸밤 등)", value="기타"),
+])
 async def search_command(
     interaction: discord.Interaction,
     키워드: str,
-    장: Optional[int] = None
+    장: Optional[app_commands.Choice[str]] = None
 ):
     await interaction.response.defer()
 
-    chapter_str   = str(장) if 장 is not None else None
-    chapter_label = f"{장}장" if 장 is not None else "전체"
+    # 구분선 선택 방지
+    if 장 and 장.value.startswith("sep"):
+        await interaction.followup.send("❌ 구분선은 선택할 수 없어요!", ephemeral=True)
+        return
+
+    if 장 is None or 장.value == "all":
+        chapter_str   = None
+        chapter_label = "전체"
+    else:
+        chapter_str   = 장.value
+        chapter_label = 장.name
 
     results = do_search(키워드, chapter_str)
 
@@ -199,7 +254,6 @@ async def search_command(
     await interaction.followup.send(embed=embed, view=view)
 
 
-# ── 실행 ─────────────────────────────────────
 if __name__ == "__main__":
     token = os.getenv("TOKEN")
     if not token:
