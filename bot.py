@@ -18,8 +18,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ──────────────────────────────────────────
-KR_DIR    = Path("./KR_json")   # 대사 텍스트 json 폴더
-VOICE_DIR = Path("./json")      # 음성파일 정보 json 폴더
+BASE_DIR  = Path(__file__).parent        # bot.py 있는 폴더 기준
+KR_DIR    = BASE_DIR / "KR_json"         # 대사 텍스트 json 폴더
+VOICE_DIR = BASE_DIR / "json"            # 음성파일 정보 json 폴더
 # ──────────────────────────────────────────
 
 RESULTS_PER_PAGE = 5
@@ -28,30 +29,49 @@ RESULTS_PER_PAGE = 5
 search_data: List[Dict] = []
 
 
+def get_chapter(key: str) -> str:
+    """파일명에서 장 번호 추출
+    - 1D101A  → "1"   (1~8장 형식)
+    - S901B   → "9"   (9장 형식)
+    """
+    m = re.match(r'^(\d+)D', key)       # 1D, 8D 등
+    if m:
+        return m.group(1)
+    m = re.match(r'^S(\d)', key)        # S9...
+    if m:
+        return m.group(1)
+    return "0"
+
+
 # ── 데이터 로드 ──────────────────────────────
 def load_all_data():
     """봇 시작 시 모든 json을 메모리에 로드"""
     for kr_file in sorted(KR_DIR.glob("KR_*.json")):
-        key = kr_file.stem[3:]   # "KR_1D101A" → "1D101A"
-
-        chapter_match = re.match(r'^(\d+)D', key)
-        chapter = chapter_match.group(1) if chapter_match else "0"
+        key = kr_file.stem[3:]   # "KR_1D101A" → "1D101A", "KR_S901B" → "S901B"
+        chapter = get_chapter(key)
 
         # ── KR json 로드
-        with open(kr_file, encoding="utf-8") as f:
-            kr_list = json.load(f)["dataList"]
+        try:
+            with open(kr_file, encoding="utf-8") as f:
+                kr_list = json.load(f)["dataList"]
+        except Exception as e:
+            print(f"[경고] {kr_file.name} 로드 실패: {e}")
+            continue
 
         # ── 음성 json 로드 (없으면 빈 dict)
         voice_file = VOICE_DIR / f"{key}.json"
         voice_map: Dict = {}
         if voice_file.exists():
-            with open(voice_file, encoding="utf-8") as f:
-                voice_list = json.load(f)["dataList"]
-            voice_map = {item["id"]: item for item in voice_list}
+            try:
+                with open(voice_file, encoding="utf-8") as f:
+                    voice_list = json.load(f)["dataList"]
+                voice_map = {item["id"]: item for item in voice_list if "id" in item}
+            except Exception as e:
+                print(f"[경고] {voice_file.name} 로드 실패: {e}")
 
         # ── 두 json을 id 기준으로 합쳐서 저장
         for item in kr_list:
-            if "content" not in item:   # 대사 없는 연출 항목 스킵
+            if "id" not in item or "content" not in item:
                 continue
             vid = item["id"]
             voice_entry = voice_map.get(vid, {})
@@ -59,10 +79,10 @@ def load_all_data():
                 "scene":   key,
                 "chapter": chapter,
                 "id":      vid,
-                "model":   item.get("model", ""),       # 캐릭터명 (없으면 내레이션)
-                "content": item["content"],             # 대사 텍스트
-                "place":   item.get("place", ""),       # 장소
-                "voice":   voice_entry.get("voice", "") # 음성파일명
+                "model":   item.get("model", ""),
+                "content": item["content"],
+                "place":   item.get("place", ""),
+                "voice":   voice_entry.get("voice", "")
             })
 
     print(f"[봇] {len(search_data)}개 대사 로드 완료")
