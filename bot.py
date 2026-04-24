@@ -5,6 +5,7 @@
 - 이전/다음 버튼으로 페이지네이션
 """
 
+import os
 import discord
 from discord import app_commands
 from discord.ext import commands
@@ -14,10 +15,11 @@ from pathlib import Path
 from typing import Optional, List, Dict
 from dotenv import load_dotenv
 
+load_dotenv()
+
 # ──────────────────────────────────────────
-BASE_DIR = r"./"
-KR_DIR   = BASE_DIR + r"\1"   # 대사 텍스트 json 폴더
-VOICE_DIR = BASE_DIR + r"\2"  # 음성파일 정보 json 폴더
+KR_DIR    = Path("./KR_json")   # 대사 텍스트 json 폴더
+VOICE_DIR = Path("./json")      # 음성파일 정보 json 폴더
 # ──────────────────────────────────────────
 
 RESULTS_PER_PAGE = 5
@@ -29,10 +31,7 @@ search_data: List[Dict] = []
 # ── 데이터 로드 ──────────────────────────────
 def load_all_data():
     """봇 시작 시 모든 json을 메모리에 로드"""
-    kr_path    = Path(KR_DIR)
-    voice_path = Path(VOICE_DIR)
-
-    for kr_file in sorted(kr_path.glob("KR_*.json")):
+    for kr_file in sorted(KR_DIR.glob("KR_*.json")):
         key = kr_file.stem[3:]   # "KR_1D101A" → "1D101A"
 
         chapter_match = re.match(r'^(\d+)D', key)
@@ -41,10 +40,9 @@ def load_all_data():
         # ── KR json 로드
         with open(kr_file, encoding="utf-8") as f:
             kr_list = json.load(f)["dataList"]
-        kr_map = {item["id"]: item for item in kr_list}
 
         # ── 음성 json 로드 (없으면 빈 dict)
-        voice_file = voice_path / f"{key}.json"
+        voice_file = VOICE_DIR / f"{key}.json"
         voice_map: Dict = {}
         if voice_file.exists():
             with open(voice_file, encoding="utf-8") as f:
@@ -94,7 +92,6 @@ class SearchView(discord.ui.View):
         self._update_buttons()
 
     def _update_buttons(self):
-        """현재 페이지에 따라 버튼 활성화/비활성화"""
         self.prev_btn.disabled = (self.page == 0)
         self.next_btn.disabled = (self.page == self.max_page)
 
@@ -111,7 +108,7 @@ class SearchView(discord.ui.View):
                 f"**{len(self.results)}개 결과** "
                 f"({self.page + 1} / {self.max_page + 1} 페이지)"
             ),
-            color=0xE4444F   # 림버스 느낌 빨간색
+            color=0xE4444F
         )
 
         for r in page_results:
@@ -164,7 +161,7 @@ async def search_command(
     키워드: str,
     장: Optional[int] = None
 ):
-    await interaction.response.defer()   # 응답 지연 (검색 시간 확보)
+    await interaction.response.defer()
 
     chapter_str   = str(장) if 장 is not None else None
     chapter_label = f"{장}장" if 장 is not None else "전체"
@@ -184,4 +181,7 @@ async def search_command(
 
 # ── 실행 ─────────────────────────────────────
 if __name__ == "__main__":
-    bot.run(TOKEN)
+    token = os.getenv("TOKEN")
+    if not token:
+        raise ValueError("[봇] .env 파일에 TOKEN이 없습니다!")
+    bot.run(token)
