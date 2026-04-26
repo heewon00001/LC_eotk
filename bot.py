@@ -1,6 +1,6 @@
 """
 림버스 컴퍼니 대사 검색 디스코드 봇
-- /대사검색 키워드:[text] 장:[선택] 으로 사용
+- /대사검색 키워드:[text] 화자:[선택] 장:[선택] 으로 사용
 - 대사 + 음성파일명 같이 출력
 - 이전/다음 버튼으로 페이지네이션
 """
@@ -20,29 +20,37 @@ load_dotenv()
 
 # ──────────────────────────────────────────
 BASE_DIR       = Path(__file__).parent
-KR_DIR         = BASE_DIR / "KR_json"         # 메인스토리 대사
-VOICE_DIR      = BASE_DIR / "json"            # 메인스토리 음성
-DTALE_KR_DIR   = BASE_DIR / "Dtales_KRjson"   # .5장/기타 대사
-DTALE_V_DIR    = BASE_DIR / "Dtales_json"     # .5장/기타 음성
+KR_DIR         = BASE_DIR / "KR_json"
+VOICE_DIR      = BASE_DIR / "json"
+DTALE_KR_DIR   = BASE_DIR / "Dtales_KRjson"
+DTALE_V_DIR    = BASE_DIR / "Dtales_json"
 # ──────────────────────────────────────────
 
 RESULTS_PER_PAGE = 5
 
 # ★ 여기에 원하는 문장 추가하면 됨
 FOOTER_MESSAGES = [
-    "여기에 문장 입력",
-    "여기에 문장 입력",
-    "여기에 문장 입력",
+    "림버스 컴퍼니의 수석 연구원 호엔하임(이 키우는 벌레)이네.",
+    "두루지벌레가 대사를 찾는 중이군",
+    "집가고싶다",
+    "추가하고싶은 대사 / 기능이 있다면 히원의 dm으로",
+    "봇이 두루지벌레인 이유는 호엔하임을 닮아서라고..",
+    "놀랍게도 이 봇에는 이스터에그가 있다네",
+    "음성파일은 구드에서 검색하게",
+    "팀장님 저 벌레는 어디서 데려온거에요",
+    "이상적인 벌레구료",
+    "흠",
+    "test",
+    "130"
 ]
+
+MAIN_CHAPTERS  = {"1","2","3","4","5","6","7","8","9"}
+INTER_CHAPTERS = {"3.5","4.5","5.5","6.5","7.5","8.5","9.5"}
 
 search_data: List[Dict] = []
 
 
-# ── 챕터 추출 ────────────────────────────────
 def get_chapter(key: str) -> str:
-    """메인스토리 파일명에서 장 번호 추출
-    1D101A → "1" / S901B → "9"
-    """
     m = re.match(r'^(\d+)D', key)
     if m:
         return m.group(1)
@@ -53,28 +61,21 @@ def get_chapter(key: str) -> str:
 
 
 def get_dtale_chapter(key: str) -> str:
-    """Dtales 파일명에서 챕터 추출
-    E301A → "3.5" / E901B → "9.5" / E000X → "기타"
-    """
     m = re.match(r'^E([1-9])\d\d', key)
     if m:
         return f"{m.group(1)}.5"
     return "기타"
 
 
-# ── 데이터 로드 ──────────────────────────────
 def load_all_data():
-    # ── 메인스토리 로드
+    search_data.clear()
     for kr_file in sorted(KR_DIR.glob("KR_*.json")):
-        key     = kr_file.stem[3:]
-        chapter = get_chapter(key)
-        _load_file(kr_file, VOICE_DIR / f"{key}.json", key, chapter)
+        key = kr_file.stem[3:]
+        _load_file(kr_file, VOICE_DIR / f"{key}.json", key, get_chapter(key))
 
-    # ── .5장 / 기타 로드
     for kr_file in sorted(DTALE_KR_DIR.glob("KR_*.json")):
-        key     = kr_file.stem[3:]
-        chapter = get_dtale_chapter(key)
-        _load_file(kr_file, DTALE_V_DIR / f"{key}.json", key, chapter)
+        key = kr_file.stem[3:]
+        _load_file(kr_file, DTALE_V_DIR / f"{key}.json", key, get_dtale_chapter(key))
 
     print(f"[봇] {len(search_data)}개 대사 로드 완료")
 
@@ -112,11 +113,22 @@ def _load_file(kr_file: Path, voice_file: Path, key: str, chapter: str):
         })
 
 
-def do_search(keyword: str, chapter: Optional[str]) -> List[Dict]:
+def do_search(keyword: str, filter_val: Optional[str], speaker: Optional[str]) -> List[Dict]:
     results = []
     kw = keyword.lower()
+    sp = speaker.lower() if speaker else None
     for entry in search_data:
-        if chapter and entry["chapter"] != chapter:
+        if filter_val:
+            c = entry["chapter"]
+            if filter_val == "main_all" and c not in MAIN_CHAPTERS:
+                continue
+            elif filter_val == "inter_all" and c not in INTER_CHAPTERS:
+                continue
+            elif filter_val == "기타" and c != "기타":
+                continue
+            elif filter_val not in ("main_all", "inter_all", "기타") and c != filter_val:
+                continue
+        if sp and sp not in entry["model"].lower():
             continue
         if kw in entry["content"].lower():
             results.append(entry)
@@ -125,11 +137,12 @@ def do_search(keyword: str, chapter: Optional[str]) -> List[Dict]:
 
 # ── 페이지네이션 UI ──────────────────────────
 class SearchView(discord.ui.View):
-    def __init__(self, results: List[Dict], keyword: str, chapter_label: str):
+    def __init__(self, results: List[Dict], keyword: str, chapter_label: str, speaker: Optional[str]):
         super().__init__(timeout=180)
         self.results       = results
         self.keyword       = keyword
         self.chapter_label = chapter_label
+        self.speaker       = speaker
         self.page          = 0
         self.max_page      = (len(results) - 1) // RESULTS_PER_PAGE
         self._update_buttons()
@@ -143,11 +156,13 @@ class SearchView(discord.ui.View):
         end   = start + RESULTS_PER_PAGE
         page_results = self.results[start:end]
 
+        speaker_str = f"　**화자:** `{self.speaker}`" if self.speaker else ""
         embed = discord.Embed(
             title="🔍 림버스 컴퍼니 대사 검색",
             description=(
                 f"**키워드:** `{self.keyword}`　"
-                f"**장:** {self.chapter_label}　"
+                f"**장:** {self.chapter_label}"
+                f"{speaker_str}　"
                 f"**{len(self.results)}개 결과** "
                 f"({self.page + 1} / {self.max_page + 1} 페이지)"
             ),
@@ -181,7 +196,6 @@ class SearchView(discord.ui.View):
         await interaction.response.edit_message(embed=self.make_embed(), view=self)
 
 
-# ── 봇 설정 ─────────────────────────────────
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
@@ -194,14 +208,15 @@ async def on_ready():
     print("[봇] 슬래시 커맨드 동기화 완료")
 
 
-@bot.tree.command(name="대사검색", description="림버스 컴퍼니 대사를 검색합니다")
+@bot.tree.command(name="대사검색", description="림버스 컴퍼니 대사를 검색하게.")
 @app_commands.describe(
     키워드="검색할 단어 또는 문장",
+    화자="캐릭터 이름 (예: 홍루, 단테 / 비워두면 전체)",
     장="검색 범위 (비워두면 전체 검색)"
 )
 @app_commands.choices(장=[
-    app_commands.Choice(name="── 메인 스토리 ──", value="sep1"),
     app_commands.Choice(name="전체",              value="all"),
+    app_commands.Choice(name="메인스토리 전체",   value="main_all"),
     app_commands.Choice(name="1장",               value="1"),
     app_commands.Choice(name="2장",               value="2"),
     app_commands.Choice(name="3장",               value="3"),
@@ -211,7 +226,7 @@ async def on_ready():
     app_commands.Choice(name="7장",               value="7"),
     app_commands.Choice(name="8장",               value="8"),
     app_commands.Choice(name="9장",               value="9"),
-    app_commands.Choice(name="── 인터발로 ──",    value="sep2"),
+    app_commands.Choice(name="인터발로 전체",     value="inter_all"),
     app_commands.Choice(name="3.5장 헬스 치킨",   value="3.5"),
     app_commands.Choice(name="4.5장 우.미.다",    value="4.5"),
     app_commands.Choice(name="5.5장",             value="5.5"),
@@ -219,37 +234,34 @@ async def on_ready():
     app_commands.Choice(name="7.5장",             value="7.5"),
     app_commands.Choice(name="8.5장",             value="8.5"),
     app_commands.Choice(name="9.5장",             value="9.5"),
-    app_commands.Choice(name="── 기타 ──",        value="sep3"),
-    app_commands.Choice(name="기타 (미니스토리/발푸밤 등)", value="기타"),
+    app_commands.Choice(name="기타 전체 (미니스토리/발푸밤 등)", value="기타"),
 ])
 async def search_command(
     interaction: discord.Interaction,
     키워드: str,
-    장: Optional[app_commands.Choice[str]] = None
+    화자: Optional[str] = None,
+    장: Optional[app_commands.Choice[str]] = None,
 ):
     await interaction.response.defer()
 
-    # 구분선 선택 방지
-    if 장 and 장.value.startswith("sep"):
-        await interaction.followup.send("❌ 구분선은 선택할 수 없어요!", ephemeral=True)
-        return
-
     if 장 is None or 장.value == "all":
-        chapter_str   = None
+        filter_val    = None
         chapter_label = "전체"
     else:
-        chapter_str   = 장.value
+        filter_val    = 장.value
         chapter_label = 장.name
 
-    results = do_search(키워드, chapter_str)
+    results = do_search(키워드, filter_val, 화자)
 
     if not results:
-        await interaction.followup.send(
-            f"❌ `{키워드}` 에 해당하는 대사가 없습니다. (장: {chapter_label})"
-        )
+        msg = f"`{키워드}`"
+        if 화자:
+            msg += f" (화자: {화자})"
+        msg += f" — 해당하는 대사를 찾지 못했네. (장: {chapter_label})"
+        await interaction.followup.send(msg)
         return
 
-    view  = SearchView(results, 키워드, chapter_label)
+    view  = SearchView(results, 키워드, chapter_label, 화자)
     embed = view.make_embed()
     await interaction.followup.send(embed=embed, view=view)
 
