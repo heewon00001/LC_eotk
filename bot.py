@@ -1,6 +1,6 @@
 """
 림버스 컴퍼니 대사 검색 디스코드 봇
-- /대사검색 키워드:[text] 화자:[선택] 장:[선택] 으로 사용
+- /대사검색 키워드:[선택] 화자:[선택] 장:[선택] 으로 사용
 - 대사 + 음성파일명 같이 출력
 - 이전/다음 버튼으로 페이지네이션
 """
@@ -28,7 +28,6 @@ DTALE_V_DIR    = BASE_DIR / "Dtales_json"
 
 RESULTS_PER_PAGE = 5
 
-# ★ 여기에 원하는 문장 추가하면 됨
 FOOTER_MESSAGES = [
     "림버스 컴퍼니의 수석 연구원 호엔하임(이 키우는 벌레)이네.",
     "두루지벌레가 대사를 찾는 중이군",
@@ -36,13 +35,19 @@ FOOTER_MESSAGES = [
     "추가하고싶은 대사 / 기능이 있다면 히원의 dm으로",
     "봇이 두루지벌레인 이유는 호엔하임을 닮아서라고..",
     "놀랍게도 이 봇에는 이스터에그가 있다네",
-    "음성파일은 구드에서 검색하게",
+    "음성파일은 구드에서 검색할 수 있다네",
     "팀장님 저 벌레는 어디서 데려온거에요",
     "이상적인 벌레구료",
-    "흠",
-    "test",
-    "130"
+    "흠..",
+    "아아. 마이크 테스트.",
+    "130",
+    "아름다운.. 대사군요",
+    "팀장님? 언제 벌레가 되신거죠..?\n..나는 여기 있네만",
+    "알리사.. 에프킬라 저리 치우게",
+    "두루지벌레의 영문 이름은 blipbug라네",
+    "뭐..놀랍군. 벌레가 이정도의 지능을 가질 줄이야.",
 ]
+
 
 MAIN_CHAPTERS  = {"1","2","3","4","5","6","7","8","9"}
 INTER_CHAPTERS = {"3.5","4.5","5.5","6.5","7.5","8.5","9.5"}
@@ -113,9 +118,9 @@ def _load_file(kr_file: Path, voice_file: Path, key: str, chapter: str):
         })
 
 
-def do_search(keyword: str, filter_val: Optional[str], speaker: Optional[str]) -> List[Dict]:
+def do_search(keyword: Optional[str], filter_val: Optional[str], speaker: Optional[str]) -> List[Dict]:
     results = []
-    kw = keyword.lower()
+    kw = keyword.lower() if keyword else None
     sp = speaker.lower() if speaker else None
     for entry in search_data:
         if filter_val:
@@ -130,14 +135,15 @@ def do_search(keyword: str, filter_val: Optional[str], speaker: Optional[str]) -
                 continue
         if sp and sp not in entry["model"].lower():
             continue
-        if kw in entry["content"].lower():
-            results.append(entry)
+        if kw and kw not in entry["content"].lower():
+            continue
+        results.append(entry)
     return results
 
 
 # ── 페이지네이션 UI ──────────────────────────
 class SearchView(discord.ui.View):
-    def __init__(self, results: List[Dict], keyword: str, chapter_label: str, speaker: Optional[str]):
+    def __init__(self, results: List[Dict], keyword: Optional[str], chapter_label: str, speaker: Optional[str]):
         super().__init__(timeout=180)
         self.results       = results
         self.keyword       = keyword
@@ -156,13 +162,14 @@ class SearchView(discord.ui.View):
         end   = start + RESULTS_PER_PAGE
         page_results = self.results[start:end]
 
-        speaker_str = f"　**화자:** `{self.speaker}`" if self.speaker else ""
+        kw_str      = f"**키워드:** `{self.keyword}`　" if self.keyword else ""
+        speaker_str = f"**화자:** `{self.speaker}`　"  if self.speaker else ""
         embed = discord.Embed(
             title="🔍 림버스 컴퍼니 대사 검색",
             description=(
-                f"**키워드:** `{self.keyword}`　"
-                f"**장:** {self.chapter_label}"
-                f"{speaker_str}　"
+                f"{kw_str}"
+                f"{speaker_str}"
+                f"**장:** {self.chapter_label}　"
                 f"**{len(self.results)}개 결과** "
                 f"({self.page + 1} / {self.max_page + 1} 페이지)"
             ),
@@ -171,7 +178,7 @@ class SearchView(discord.ui.View):
 
         for r in page_results:
             model = r["model"] if r["model"] else "내레이션"
-            voice = f"`{r['voice']}`" if r["voice"] else "❌ 없음"
+            voice = f"`{r['voice']}`" if r["voice"] else "없음"
             place_str = f"\n📍 _{r['place']}_" if r["place"] else ""
 
             embed.add_field(
@@ -210,9 +217,9 @@ async def on_ready():
 
 @bot.tree.command(name="대사검색", description="림버스 컴퍼니 대사를 검색하게.")
 @app_commands.describe(
-    키워드="검색할 단어 또는 문장",
-    화자="캐릭터 이름 (예: 홍루, 단테 / 비워두면 전체)",
-    장="검색 범위 (비워두면 전체 검색)"
+    키워드="검색할 단어 또는 문장 ",
+    화자="캐릭터 이름 (예: 호엔하임, 단테)",
+    장="검색 범위 "
 )
 @app_commands.choices(장=[
     app_commands.Choice(name="전체",              value="all"),
@@ -238,11 +245,17 @@ async def on_ready():
 ])
 async def search_command(
     interaction: discord.Interaction,
-    키워드: str,
+    키워드: Optional[str] = None,
     화자: Optional[str] = None,
     장: Optional[app_commands.Choice[str]] = None,
 ):
     await interaction.response.defer()
+
+    if not 키워드 and not 화자 and not 장:
+        await interaction.followup.send(
+            "...적어도 키워드, 화자, 장 중 하나 이상은 입력해야 하네.", ephemeral=True
+        )
+        return
 
     if 장 is None or 장.value == "all":
         filter_val    = None
@@ -254,11 +267,13 @@ async def search_command(
     results = do_search(키워드, filter_val, 화자)
 
     if not results:
-        msg = f"`{키워드}`"
-        if 화자:
-            msg += f" (화자: {화자})"
-        msg += f" — 해당하는 대사를 찾지 못했네. (장: {chapter_label})"
-        await interaction.followup.send(msg)
+        parts = []
+        if 키워드: parts.append(f"키워드: {키워드}")
+        if 화자:   parts.append(f"화자: {화자}")
+        parts.append(f"장: {chapter_label}")
+        await interaction.followup.send(
+            f"{' / '.join(parts)} — 해당하는 대사를 찾지 못했네."
+        )
         return
 
     view  = SearchView(results, 키워드, chapter_label, 화자)
@@ -269,5 +284,5 @@ async def search_command(
 if __name__ == "__main__":
     token = os.getenv("TOKEN")
     if not token:
-        raise ValueError("[봇] .env 파일에 TOKEN이 없습니다!")
+        raise ValueError(".env 파일에 TOKEN이 없네. 다시 확인해보게나")
     bot.run(token)
