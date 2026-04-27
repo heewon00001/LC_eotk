@@ -1,4 +1,4 @@
-"""
+﻿"""
 림버스 컴퍼니 대사 검색 디스코드 봇
 - /대사검색 키워드:[선택] 화자:[선택] 장:[선택] 으로 사용
 - 대사 + 음성파일명 같이 출력
@@ -27,6 +27,7 @@ DTALE_V_DIR    = BASE_DIR / "Dtales_json"
 # ──────────────────────────────────────────
 
 RESULTS_PER_PAGE = 5
+
 
 FOOTER_MESSAGES = [
     "제작자(히원)의 최애는 호엔하임이라네요(9장)",
@@ -191,6 +192,33 @@ def do_search(keyword: Optional[str], filter_val: Optional[str], speaker: Option
     return results
 
 
+
+# ── 페이지 이동 Modal ────────────────────────
+class GotoPageModal(discord.ui.Modal, title="페이지 이동"):
+    page_num = discord.ui.TextInput(
+        label="이동할 페이지 번호",
+        placeholder="숫자를 입력하게.",
+        min_length=1,
+        max_length=5,
+    )
+
+    def __init__(self, view: "SearchView"):
+        super().__init__()
+        self.search_view = view
+
+    async def on_submit(self, interaction: discord.Interaction):
+        try:
+            target = int(self.page_num.value) - 1
+            if target < 0 or target > self.search_view.max_page:
+                await interaction.response.send_message(
+                    f"1 ~ {self.search_view.max_page + 1} 사이의 숫자를 입력하게.", ephemeral=True
+                )
+                return
+            self.search_view.page = target
+            self.search_view._update_buttons()
+            await interaction.response.edit_message(embed=self.search_view.make_embed(), view=self.search_view)
+        except ValueError:
+            await interaction.response.send_message("숫자만 입력하게.", ephemeral=True)
 # ── 페이지네이션 UI ──────────────────────────
 class SearchView(discord.ui.View):
     def __init__(self, results: List[Dict], keyword: Optional[str], chapter_label: str, speaker: Optional[str]):
@@ -239,6 +267,10 @@ class SearchView(discord.ui.View):
 
         embed.set_footer(text=random.choice(FOOTER_MESSAGES))
         return embed
+
+    @discord.ui.button(label="페이지 이동", style=discord.ButtonStyle.primary)
+    async def goto_btn(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_modal(GotoPageModal(self))
 
     @discord.ui.button(label="◀ 이전", style=discord.ButtonStyle.secondary)
     async def prev_btn(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -336,3 +368,5 @@ if __name__ == "__main__":
     if not token:
         raise ValueError(".env 파일에 TOKEN이 없네. 다시 확인해보게나")
     bot.run(token)
+
+
