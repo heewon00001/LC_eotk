@@ -1,0 +1,434 @@
+{
+  "dataList": [
+    {
+      "id": 0,
+      "characterlist": "아이린:5",
+      "feeling": "angry2",
+      "bg": "story_lighthouse out",
+      "bgm": "Abandoned",
+      "soundeffect": "SFX_Leather_Crumble_Light"
+    },
+    {
+      "id": 1,
+      "characterlist": "이스마엘다침:9",
+      "feeling": "angry",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 2,
+      "characterlist": "ALL:-1,료슈다침:3",
+      "feeling": "angry3",
+      "soundeffect": "SFX_Ryoshu_Sword_Ready"
+    },
+    {
+      "id": 3,
+      "characterlist": "싱클레어다침:1",
+      "feeling": "sad",
+      "effect": "CustomCamShake:[45][5][0.4]",
+      "soundeffect": "SFX_Leather_Crumble_Hard"
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5,
+      "characterlist": "ALL:-1,마지막기사:5:mode=FADE_IN",
+      "soundeffect": "SFX_Armor_Ready, SFX_Dist_Breath_1"
+    },
+    {
+      "id": 6
+    },
+    {
+      "id": 7,
+      "characterlist": "ALL:-1"
+    },
+    {
+      "id": 8,
+      "characterlist": "단테:5",
+      "cg": "black:FadeIn",
+      "voice": "D_Normal",
+      "effectv2": "{\"controlCG\": {\"IsBlockToKillCG\":true}}",
+      "waittime": 1
+    },
+    {
+      "id": 9,
+      "characterlist": "ALL:-1",
+      "cg": "light1:FadeIn",
+      "effect": "Blur:duration=0.1:amount=3.4:iterations=4",
+      "bgm": "War",
+      "soundeffect": "SFX_Sunshine_Chime"
+    },
+    {
+      "id": 10,
+      "effect": "CustomCamShake:[3][2][5]"
+    },
+    {
+      "id": 11,
+      "effect": "CustomCamShake:[2][2][5]"
+    },
+    {
+      "id": 12,
+      "cg": "light2:FadeIn",
+      "effect": "Blur:duration=1:amount=0.5:iterations=4,CustomCamShake:[5][2][3]"
+    },
+    {
+      "id": 13,
+      "effect": "CustomCamShake:[3][2][5],Blur:duration=1:amount=5:iterations=4"
+    },
+    {
+      "id": 14,
+      "effect": "CustomCamShake:[3][2][5],Blur:duration=0.5:amount=3:iterations=4"
+    },
+    {
+      "id": 15
+    },
+    {
+      "id": 16,
+      "characterlist": "단테:5",
+      "bg": "white",
+      "voice": "D_Click"
+    },
+    {
+      "id": 17,
+      "characterlist": "ALL:-1",
+      "cg": "light3:FadeIn"
+    },
+    {
+      "id": 18,
+      "cg": "white:FadeIn_Long",
+      "effect": "Blur:duration=0.5:amount=0:iterations=4"
+    },
+    {
+      "id": 19,
+      "characterlist": "그레고르그림자:5:mode=FADE_IN",
+      "cg": "white:FadeOut,black:FadeOut,light3:FadeOut,light2:FadeOut,light1:FadeOut",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 20,
+      "characterlist": "단테:5",
+      "bg": "story_lighthouse out",
+      "effect": "Transition:type=black:startDuration=0.5:endDuration=0.3:direction=up",
+      "voice": "D_Normal"
+    },
+    {
+      "id": 21,
+      "voice": "D_Click"
+    },
+    {
+      "id": 22,
+      "characterlist": "그레고르다침:5",
+      "feeling": "depressed",
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 23,
+      "feeling": "idle2",
+      "soundeffect": "SFX_Stretch_HardGrab"
+    },
+    {
+      "id": 24,
+      "effect": "Settings:IsSkipDialogEvent",
+      "customevent": 0
+    },
+    {
+      "id": 25,
+      "characterlist": "ALL:-1",
+      "cg": "white:FadeIn:[0~0.1],white:FadeOut:[0.1~0.2]",
+      "effect": "CustomCamShake:[60][5][0.3]",
+      "soundeffect": "SFX_MlynarGregEGO_1"
+    },
+    {
+      "id": 26,
+      "cg": "white:FadeIn:[0~0.1],white:FadeOut:[0.1~0.2]",
+      "effect": "CustomCamShake:[10][25][2]",
+      "soundeffect": "SFX_MlynarGregEGO_2"
+    },
+    {
+      "id": 27,
+      "bgm": "War:90"
+    },
+    {
+      "id": 28,
+      "bgm": "War:80",
+      "soundeffect": "SFX_Light_On, SFX_5Impact_2"
+    },
+    {
+      "id": 29,
+      "characterlist": "파우스트다침:1",
+      "feeling": "smile",
+      "bgm": "War:70",
+      "soundeffect": "SFX_Cotton_Crumble_SoftNew"
+    },
+    {
+      "id": 30,
+      "characterlist": "돈키호테다침:3",
+      "feeling": "surprise",
+      "effect": "StandingJump:position=3",
+      "bgm": "War:60",
+      "soundeffect": "SFX_Leather_Crumble_Hard"
+    },
+    {
+      "id": 31,
+      "characterlist": "ALL:-1, 오티스다침:5",
+      "feeling": "angry",
+      "emotion": "Exclame",
+      "bgm": "War:40",
+      "soundeffect": "SFX_Sweat_Crumble_Light"
+    },
+    {
+      "id": 32,
+      "characterlist": "ALL:-1",
+      "effect": "CameraMoveZoom:mode=on:vertical=0.11:zoom=1.2:delay=0",
+      "bgm": "War:30"
+    },
+    {
+      "id": 33,
+      "effect": "CustomCamShake:[25][10][2]",
+      "bgm": "War:20",
+      "soundeffect": "SFX_Jean_Crumble_Hard"
+    },
+    {
+      "id": 34,
+      "characterlist": "아미야:5",
+      "feeling": "angry2",
+      "bg": "story_lighthouse out",
+      "effect": "CameraMoveZoom:mode=off:delay=0",
+      "bgm": "Abandoned",
+      "soundeffect": "SFX_Phone_GetCall"
+    },
+    {
+      "id": 35,
+      "characterlist": "ALL:-1, 그레고르다침:7",
+      "feeling": "serious",
+      "soundeffect": "SFX_Hair_Care_2"
+    },
+    {
+      "id": 36,
+      "characterlist": "싱클레어다침:9",
+      "feeling": "surprise",
+      "soundeffect": "SFX_Leather_Crumble_Light"
+    },
+    {
+      "id": 37,
+      "characterlist": "오티스다침:3",
+      "feeling": "angry2",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 38,
+      "characterlist": "ALL:-1, 돈키호테다침:5",
+      "feeling": "happy2",
+      "soundeffect": "SFX_Run_For_Attack"
+    },
+    {
+      "id": 39,
+      "characterlist": "싱클레어다침:5",
+      "feeling": "shork",
+      "effect": "CustomCamShake:[10][25][2]",
+      "soundeffect": "SFX_Sweat_Crumble_Hard"
+    },
+    {
+      "id": 40,
+      "characterlist": "ALL:-1, 돈키호테다침:5",
+      "effect": "Feeling:돈키호테다침=happy"
+    },
+    {
+      "id": 41
+    },
+    {
+      "id": 42,
+      "characterlist": "돈키호테다침:3, 마지막기사:9",
+      "feeling": "smile",
+      "effect": "CustomCamShake:[25][3][0.5]",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 43,
+      "effect": "CustomCamShake:[30][1][3]",
+      "soundeffect": "SFX_Horse_Front_1, SFX_Dist_Breath_1"
+    },
+    {
+      "id": 44,
+      "effect": "CustomCamShake:[30][1][3]",
+      "soundeffect": "SFX_ClothNCoin_Crumble, SFX_Dist_Breath_2"
+    },
+    {
+      "id": 45,
+      "characterlist": "ALL:-1, 단테:5",
+      "emotion": "Exclame",
+      "voice": "D_Normal"
+    },
+    {
+      "id": 46,
+      "characterlist": "ALL:-1,돈키호테다침:5",
+      "feeling": "happy",
+      "emotion": "Star",
+      "effect": "Shake:standing:strength=10:vibrato=30:randomness=20:standingIndexes=[5]",
+      "soundeffect": "SFX_Leather_Crumble_Hard"
+    },
+    {
+      "id": 47,
+      "characterlist": "마지막기사:5",
+      "effect": "CustomCamShake:[30][1][3]",
+      "soundeffect": "SFX_Metalarm, SFX_Dist_Breath_3"
+    },
+    {
+      "id": 48,
+      "characterlist": "돈키호테다침:5",
+      "feeling": "smile",
+      "soundeffect": "SFX_Jean_Crumble_Hard"
+    },
+    {
+      "id": 49,
+      "feeling": "surprise2"
+    },
+    {
+      "id": 50,
+      "characterlist": "마지막기사:5",
+      "effect": "CustomCamShake:[30][1][3]",
+      "soundeffect": "SFX_Metalarm, SFX_Dist_Breath_1"
+    },
+    {
+      "id": 51,
+      "effect": "CustomCamShake:[30][1][3]",
+      "soundeffect": "SFX_ClothNCoin_Crumble, SFX_Dist_Breath_3"
+    },
+    {
+      "id": 52,
+      "characterlist": "돈키호테다침:5",
+      "feeling": "smile",
+      "soundeffect": "SFX_Jean_Crumble_Hard"
+    },
+    {
+      "id": 53
+    },
+    {
+      "id": 54,
+      "feeling": "idle3",
+      "soundeffect": "SFX_Cotton_Crumble_SoftNew"
+    },
+    {
+      "id": 55
+    },
+    {
+      "id": 56,
+      "characterlist": "마지막기사:5"
+    },
+    {
+      "id": 57
+    },
+    {
+      "id": 58,
+      "characterlist": "마지막기사:5:mode=FADE_OUT",
+      "soundeffect": "SFX_Wave_Close, SFX_Horse_Near"
+    },
+    {
+      "id": 59,
+      "characterlist": "메이어스:5",
+      "feeling": "surprise"
+    },
+    {
+      "id": 60,
+      "characterlist": "아이린:5",
+      "feeling": "angry",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 61,
+      "characterlist": "ALL:-1,돈키호테다침:7,로쟈다침:5",
+      "feeling": "shock",
+      "soundeffect": "SFX_Walk_Wood_2StepOnly"
+    },
+    {
+      "id": 62,
+      "characterlist": "오티스다침:3",
+      "feeling": "angry",
+      "emotion": "Angry",
+      "soundeffect": "SFX_Sweat_Crumble_Hard"
+    },
+    {
+      "id": 63,
+      "feeling": "sad3",
+      "emotion": "Silence",
+      "soundeffect": "SFX_Cotton_Crumble_SoftNew"
+    },
+    {
+      "id": 64
+    },
+    {
+      "id": 65,
+      "characterlist": "ALL:-1,아미야:7",
+      "feeling": "surprise",
+      "soundeffect": "SFX_Cloth_Crumble, SFX_Transcevier_Open"
+    },
+    {
+      "id": 66,
+      "characterlist": "단테:5",
+      "emotion": "Question",
+      "voice": "D_Normal"
+    },
+    {
+      "id": 67,
+      "feeling": "smile",
+      "soundeffect": "SFX_Cotton_Crumble_SoftNew"
+    },
+    {
+      "id": 68,
+      "characterlist": "오티스다침:3",
+      "feeling": "surprise3",
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 69,
+      "feeling": "idle",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 70,
+      "voice": "D_Normal"
+    },
+    {
+      "id": 71,
+      "characterlist": "ALL:-1",
+      "cg": "BlackScreen:FadeIn"
+    },
+    {
+      "id": 72,
+      "characterlist": "스카디:9",
+      "cg": "BlackScreen:FadeOut"
+    },
+    {
+      "id": 73,
+      "feeling": "surprise",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 74,
+      "feeling": "idle"
+    },
+    {
+      "id": 75,
+      "characterlist": "아이린:3",
+      "feeling": "angry",
+      "soundeffect": "SFX_Walk_Wood_2StepOnly"
+    },
+    {
+      "id": 76,
+      "feeling": "idle",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 77,
+      "characterlist": "아미야:5",
+      "feeling": "idle",
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 78,
+      "characterlist": "로쟈다침:1",
+      "feeling": "sigh",
+      "soundeffect": "SFX_Leather_Crumble_Light"
+    }
+  ]
+}

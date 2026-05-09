@@ -28,8 +28,11 @@ DTALE_V_DIR    = BASE_DIR / "Dtales_json"
 
 RESULTS_PER_PAGE = 5
 
-
 FOOTER_MESSAGES = [
+    # "과연 이런걸 보러 올 사람이 있을까 ㅋㅋ"
+    # "대사 꼬라지가 말이 아니라고요? 시ㅣㅣ바 램호엔이 좋은걸 어카라고 샤ㅑ갈ㄹㄹ"
+    # "시ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ바",
+    # 개현타오네
     "제작자(히원)의 최애는 호엔하임이라네요(9장)",
     "제작자(히원)의 최애는 호엔하임이라네요(9장)",
     "제작자(히원)의 최애는 호엔하임이라네요(9장)",
@@ -99,7 +102,7 @@ FOOTER_MESSAGES = [
 
 ]
 
-
+""
 MAIN_CHAPTERS  = {"1","2","3","4","5","6","7","8","9"}
 INTER_CHAPTERS = {"3.5","4.5","5.5","6.5","7.5","8.5","9.5"}
 
@@ -197,7 +200,7 @@ def do_search(keyword: Optional[str], filter_val: Optional[str], speaker: Option
 class GotoPageModal(discord.ui.Modal, title="페이지 이동"):
     page_num = discord.ui.TextInput(
         label="이동할 페이지 번호",
-        placeholder="숫자를 입력하게.",
+        placeholder="숫자 입력.",
         min_length=1,
         max_length=5,
     )
@@ -211,7 +214,7 @@ class GotoPageModal(discord.ui.Modal, title="페이지 이동"):
             target = int(self.page_num.value) - 1
             if target < 0 or target > self.search_view.max_page:
                 await interaction.response.send_message(
-                    f"1 ~ {self.search_view.max_page + 1} 사이의 숫자를 입력하게.", ephemeral=True
+                    f"1 ~ {self.search_view.max_page + 1} 사이의 숫자를 입력하게..", ephemeral=True
                 )
                 return
             self.search_view.page = target

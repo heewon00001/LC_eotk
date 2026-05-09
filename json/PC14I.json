@@ -1,0 +1,533 @@
+{
+  "dataList": [
+    {
+      "id": 0,
+      "characterlist": "주교메이어스:3",
+      "feeling": "smile",
+      "bg": "story_masas_controlroom",
+      "bgm": "Endless_Sorrow",
+      "soundeffect": "SFX_Walk_Wood_2StepOnly"
+    },
+    {
+      "id": 1,
+      "characterlist": "파비우스:7",
+      "feeling": "shock",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 2,
+      "feeling": "idle2",
+      "soundeffect": "SFX_Cotton_Crumble_SoftNew"
+    },
+    {
+      "id": 3,
+      "feeling": "angry"
+    },
+    {
+      "id": 4,
+      "soundeffect": "SFX_Leather_Crumble_Light"
+    },
+    {
+      "id": 5,
+      "feeling": "smile",
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 6,
+      "feeling": "close",
+      "soundeffect": "SFX_Cotton_Crumble_SoftNew"
+    },
+    {
+      "id": 7
+    },
+    {
+      "id": 8,
+      "feeling": "idle",
+      "emotion": "Question",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 9,
+      "soundeffect": "SFX_Walk_Wood_2StepOnly"
+    },
+    {
+      "id": 10,
+      "characterlist": "ALL:-1,주교메이어스:5",
+      "feeling": "sad",
+      "soundeffect": "SFX_Cotton_crumble_SoftNew"
+    },
+    {
+      "id": 11,
+      "feeling": "idle"
+    },
+    {
+      "id": 12,
+      "cg": "black",
+      "bgm": "Endless_Sorrow:0",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 13,
+      "characterlist": "뒤틀린메이어스:5",
+      "bg": "story_fathoms_mayors_v1",
+      "cg": "black:FadeOut",
+      "soundeffect": "SFX_Jean_Crumble_Light",
+      "customevent": 0
+    },
+    {
+      "id": 14
+    },
+    {
+      "id": 15
+    },
+    {
+      "id": 16,
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 17,
+      "soundeffect": "SFX_Walk_Wood_2StepOnly"
+    },
+    {
+      "id": 18
+    },
+    {
+      "id": 19,
+      "characterlist": "파우스트 : 5, 싱클레어 : 3",
+      "feeling": "idle2",
+      "effect": "Transition:type=black:startDuration=0.5:endDuration=0.3:direction=left",
+      "soundeffect": "SFX_Cloth_Crumble,SFX_Scene_Change_Whoosh"
+    },
+    {
+      "id": 20,
+      "feeling": "sad4",
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 21,
+      "feeling": "sad3",
+      "soundeffect": "SFX_Stretch_HardGrab"
+    },
+    {
+      "id": 22,
+      "characterlist": "ALL : -1, 뒤틀린메이어스:5",
+      "effect": "Transition:type=black:startDuration=0.5:endDuration=0.3:direction=right",
+      "soundeffect": "SFX_Scene_Change_Whoosh_Slow"
+    },
+    {
+      "id": 23,
+      "soundeffect": "SFX_Cotton_Crumble_SoftNew"
+    },
+    {
+      "id": 24,
+      "characterlist": "ALL:-1, 박사:5",
+      "effect": "Transition:type=black:startDuration=0.5:endDuration=0.3:direction=left",
+      "soundeffect": "SFX_Walk_Iron_Once,SFX_Scene_Change_Whoosh"
+    },
+    {
+      "id": 25
+    },
+    {
+      "id": 26,
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 27,
+      "soundeffect": "SFX_Cotton_Crumble_SoftNew"
+    },
+    {
+      "id": 28
+    },
+    {
+      "id": 29,
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 30,
+      "characterlist": "뒤틀린메이어스:5",
+      "effect": "Transition:type=black:startDuration=0.5:endDuration=0.3:direction=right",
+      "soundeffect": "SFX_Cloth_Crumble,SFX_Scene_Change_Whoosh_Slow"
+    },
+    {
+      "id": 31,
+      "characterlist": "ALL:-1, 주교메이어스 : 5",
+      "bg": "story_village_inside_afternoon",
+      "cg": "black:FadeIn:[0~0],black:FadeOut:[0~1]",
+      "effect": "CustomCamShake:[15][25][1]",
+      "bgm": "Lost_Beacon",
+      "soundeffect": "SFX_SeaTerror_Kill",
+      "customevent": 1
+    },
+    {
+      "id": 32,
+      "feeling": "sad",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 33,
+      "characterlist": "ALL:-1",
+      "monologue": true
+    },
+    {
+      "id": 34,
+      "monologue": true
+    },
+    {
+      "id": 35,
+      "characterlist": "주교메이어스 : 5",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 36,
+      "characterlist": "ALL:-1",
+      "monologue": true
+    },
+    {
+      "id": 37,
+      "monologue": true
+    },
+    {
+      "id": 38,
+      "monologue": true
+    },
+    {
+      "id": 39,
+      "monologue": true
+    },
+    {
+      "id": 40,
+      "monologue": true
+    },
+    {
+      "id": 41,
+      "monologue": true
+    },
+    {
+      "id": 42,
+      "characterlist": "주교메이어스 : 5",
+      "feeling": "angry2",
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 43,
+      "characterlist": "ALL:-1",
+      "bg": "story_village_inside_night_off",
+      "cg": "black:FadeIn",
+      "monologue": true
+    },
+    {
+      "id": 44,
+      "monologue": true
+    },
+    {
+      "id": 45,
+      "cg": "black:FadeOut",
+      "monologue": true
+    },
+    {
+      "id": 46,
+      "characterlist": "주교메이어스 : 5",
+      "feeling": "angry2",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 47,
+      "feeling": "sad",
+      "soundeffect": "SFX_Walk_Wood_2StepOnly"
+    },
+    {
+      "id": 48,
+      "characterlist": "ALL:-1",
+      "monologue": true
+    },
+    {
+      "id": 49,
+      "monologue": true
+    },
+    {
+      "id": 50,
+      "monologue": true
+    },
+    {
+      "id": 51,
+      "monologue": true
+    },
+    {
+      "id": 52,
+      "cg": "black:FadeIn:[0~0.1],black:FadeOut:[0.1~0.2],PC09:FadeIn,fov_03:FadeIn",
+      "effect": "Ripples:amount=5:isOmniDirectional=true:speed=1",
+      "monologue": true
+    },
+    {
+      "id": 53,
+      "cg": "ALL:FadeOut",
+      "effect": "Ripples:amount=0:isOmniDirectional=true:speed=1",
+      "monologue": true
+    },
+    {
+      "id": 54,
+      "monologue": true
+    },
+    {
+      "id": 55,
+      "characterlist": "주교메이어스 : 5",
+      "feeling": "idle2",
+      "cg": "E000X_8:FadeIn:[0~0.1],E000X_8:FadeOut:[0.1~0.2]",
+      "effect": "CustomCamShake:[50][20][0.5]",
+      "soundeffect": "SFX_Leather_Crumble_Hard,SFX_Noise_Short_1"
+    },
+    {
+      "id": 56
+    },
+    {
+      "id": 57,
+      "feeling": "angry2",
+      "cg": "E000X_8:FadeIn:[0~0.1],E000X_8:FadeOut:[0.1~0.2]",
+      "soundeffect": "SFX_Noise_Short_3"
+    },
+    {
+      "id": 58,
+      "monologue": true
+    },
+    {
+      "id": 59,
+      "monologue": true
+    },
+    {
+      "id": 60,
+      "feeling": "idle2",
+      "cg": "E000X_8:FadeIn:[0~0.1],E000X_8:FadeOut:[0.1~0.2],fov_01:FadeIn_Continue",
+      "soundeffect": "SFX_Noise_Ultra"
+    },
+    {
+      "id": 61,
+      "cg": "fov_02:FadeIn_Continue"
+    },
+    {
+      "id": 62,
+      "cg": "fov_03:FadeIn_Continue",
+      "effect": "CustomCamShake:[5][10][1]",
+      "soundeffect": "SFX_Leather_Crumble_Hard"
+    },
+    {
+      "id": 63,
+      "cg": "black:FadeIn_Continue",
+      "soundeffect": "SFX_Cloth_Crumble, SFX_Noise_Short_1"
+    },
+    {
+      "id": 64,
+      "monologue": true
+    },
+    {
+      "id": 65,
+      "characterlist": "뒤틀린메이어스:5",
+      "bg": "story_fathoms_mayors_v1",
+      "cg": "ALL:FadeOut",
+      "effect": "CustomCamShake:[5][2][3]",
+      "soundeffect": "SFX_Cloth_Crumble",
+      "customevent": 0
+    },
+    {
+      "id": 66,
+      "effect": "CustomCamShake:[5][2][3]"
+    },
+    {
+      "id": 67,
+      "characterlist": "아미야:5",
+      "feeling": "angry2",
+      "effect": "Transition:type=black:startDuration=0.5:endDuration=0.3:direction=left",
+      "soundeffect": "SFX_Walk_Iron_Once,SFX_Scene_Change_Whoosh"
+    },
+    {
+      "id": 68
+    },
+    {
+      "id": 69,
+      "feeling": "idle",
+      "soundeffect": "SFX_Cloth_Rubbed_Move"
+    },
+    {
+      "id": 70,
+      "characterlist": "단테:5",
+      "voice": "D_Tick"
+    },
+    {
+      "id": 71,
+      "characterlist": "ALL:-1"
+    },
+    {
+      "id": 72
+    },
+    {
+      "id": 73
+    },
+    {
+      "id": 74
+    },
+    {
+      "id": 75,
+      "characterlist": "단테:5",
+      "voice": "D_Normal"
+    },
+    {
+      "id": 76,
+      "voice": "D_Normal"
+    },
+    {
+      "id": 77,
+      "voice": "D_Click"
+    },
+    {
+      "id": 78,
+      "voice": "D_Normal"
+    },
+    {
+      "id": 79,
+      "effect": "CustomCamShake:[36][4][0.3]",
+      "voice": "D_FastTickTok"
+    },
+    {
+      "id": 80,
+      "voice": "D_Normal"
+    },
+    {
+      "id": 81,
+      "characterlist": "뒤틀린메이어스:9",
+      "effect": "Transition:type=black:startDuration=0.5:endDuration=0.3:direction=down",
+      "soundeffect": "SFX_Scene_Change_Whoosh"
+    },
+    {
+      "id": 82,
+      "characterlist": "히스클리프:3",
+      "feeling": "idle",
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 83,
+      "feeling": "idle"
+    },
+    {
+      "id": 84,
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 85,
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 86,
+      "voice": "D_Normal"
+    },
+    {
+      "id": 87,
+      "voice": "D_Normal"
+    },
+    {
+      "id": 88,
+      "voice": "D_Click"
+    },
+    {
+      "id": 89,
+      "soundeffect": "SFX_Cloth_Rubbed_Move"
+    },
+    {
+      "id": 90,
+      "soundeffect": "SFX_Leather_Crumble_Light"
+    },
+    {
+      "id": 91,
+      "soundeffect": "SFX_Stretch_HardGrab"
+    },
+    {
+      "id": 92,
+      "voice": "D_Normal"
+    },
+    {
+      "id": 93,
+      "characterlist": "돈키호테 : 3",
+      "feeling": "smile",
+      "effect": "CustomCamShake:[36][4][0.3]",
+      "soundeffect": "SFX_Jean_Crumble_Hard"
+    },
+    {
+      "id": 94,
+      "feeling": "idle",
+      "soundeffect": "SFX_Walk_Wood_2StepOnly"
+    },
+    {
+      "id": 95,
+      "characterlist": "ALL : -1, 뒤틀린메이어스 : 5",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 96,
+      "characterlist": "아이린 : 5",
+      "feeling": "idle3",
+      "soundeffect": "SFX_Walk_Stone"
+    },
+    {
+      "id": 97,
+      "feeling": "idle2"
+    },
+    {
+      "id": 98,
+      "feeling": "angry",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 99,
+      "characterlist": "ALL : -1"
+    },
+    {
+      "id": 100
+    },
+    {
+      "id": 101
+    },
+    {
+      "id": 102,
+      "characterlist": "홍루 : 5, 오티스 : 3",
+      "feeling": "idle",
+      "soundeffect": "SFX_Walk_Wood_2StepOnly"
+    },
+    {
+      "id": 103,
+      "feeling": "close",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 104,
+      "feeling": "close"
+    },
+    {
+      "id": 105,
+      "feeling": "idle",
+      "soundeffect": "SFX_Cotton_Crumble_SoftNew"
+    },
+    {
+      "id": 106,
+      "characterlist": "ALL : -1, 뒤틀린메이어스 : 5",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 107,
+      "characterlist": "홍루 : 1 : mode = FADE_IN",
+      "feeling": "smile4",
+      "effect": "Transition:type=black:startDuration=0.5:endDuration=0.3:direction=left",
+      "soundeffect": "SFX_Scene_Change_Whoosh"
+    },
+    {
+      "id": 108
+    },
+    {
+      "id": 109,
+      "feeling": "idle",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 110,
+      "feeling": "close",
+      "soundeffect": "SFX_Walk_Iron_Once"
+    }
+  ]
+}

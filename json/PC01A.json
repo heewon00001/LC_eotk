@@ -1,0 +1,247 @@
+{
+  "dataList": [
+    {
+      "id": 0,
+      "characterlist": "아미야:5",
+      "feeling": "idle",
+      "bg": "story_foggy beach",
+      "bgm": "Call_Of_Iberia",
+      "soundeffect": "SFX_Walk_Dirt"
+    },
+    {
+      "id": 1,
+      "characterlist": "ALL:-1,이스마엘:3,그레고르:1",
+      "feeling": "sigh2",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 2,
+      "feeling": "angry",
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4,
+      "characterlist": "ALL:-1"
+    },
+    {
+      "id": 5,
+      "characterlist": "스카디:5",
+      "feeling": "idle2",
+      "soundeffect": "SFX_Cotton_Crumble_SoftNew"
+    },
+    {
+      "id": 6,
+      "feeling": "sad"
+    },
+    {
+      "id": 7,
+      "characterlist": "ALL:-1,그레고르:3",
+      "feeling": "smile2",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 8,
+      "characterlist": "ALL:-1,아미야:1,단테:3,스카디:7",
+      "feeling": "idle",
+      "soundeffect": "SFX_Walk_Wood_2StepOnly"
+    },
+    {
+      "id": 9,
+      "emotion": "Sweat",
+      "voice": "D_Tick"
+    },
+    {
+      "id": 10,
+      "feeling": "idle2",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 11,
+      "characterlist": "ALL:-1,홍루:5",
+      "feeling": "idle3",
+      "soundeffect": "SFX_Leather_Crumble_Light"
+    },
+    {
+      "id": 12,
+      "feeling": "idlel 2",
+      "soundeffect": "SFX_Cotton_Crumble_SoftNew"
+    },
+    {
+      "id": 13,
+      "characterlist": "그레고르:3",
+      "feeling": "surprise",
+      "emotion": "Question",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 14,
+      "feeling": "surprise"
+    },
+    {
+      "id": 15,
+      "characterlist": "이스마엘:7",
+      "feeling": "surprise",
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 16,
+      "characterlist": "ALL:-1,단테:5",
+      "emotion": "Sweat",
+      "voice": "D_Click"
+    },
+    {
+      "id": 17,
+      "characterlist": "아미야:3",
+      "feeling": "idle",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 18
+    },
+    {
+      "id": 19
+    },
+    {
+      "id": 20,
+      "voice": "D_Normal"
+    },
+    {
+      "id": 21,
+      "characterlist": "이스마엘:7",
+      "feeling": "idle",
+      "soundeffect": "SFX_Sweat_Crumble_Light"
+    },
+    {
+      "id": 22,
+      "feeling": "idle"
+    },
+    {
+      "id": 23,
+      "feeling": "smile",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 24,
+      "characterlist": "그레고르:9",
+      "feeling": "smile",
+      "soundeffect": "SFX_Walk_Wood_2StepOnly"
+    },
+    {
+      "id": 25,
+      "voice": "D_Normal"
+    },
+    {
+      "id": 26,
+      "characterlist": "ALL:-1,아미야:3,이스마엘:7,이상:9",
+      "feeling": "smile2",
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 27,
+      "feeling": "smile",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 28,
+      "feeling": "idle",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 29,
+      "characterlist": "ALL:-1,스카디:7",
+      "feeling": "idle2",
+      "soundeffect": "SFX_Walk_Dirt"
+    },
+    {
+      "id": 30,
+      "characterlist": "그레고르:3",
+      "feeling": "idle2",
+      "soundeffect": "SFX_Hair_Care"
+    },
+    {
+      "id": 31,
+      "characterlist": "단테:1:mode=FADE_IN",
+      "feeling": "idle",
+      "soundeffect": "SFX_Cotton_Crumble_SoftNew"
+    },
+    {
+      "id": 32
+    },
+    {
+      "id": 33,
+      "characterlist": "홍루:3,스카디:7",
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 34,
+      "feeling": "sad",
+      "soundeffect": "SFX_Walk_Wood_2StepOnly, SFX_Cotton_Crumble_SoftNew:delay=0.6"
+    },
+    {
+      "id": 35,
+      "emotion": "Serious",
+      "voice": "D_Wick"
+    },
+    {
+      "id": 36
+    },
+    {
+      "id": 37,
+      "characterlist": "ALL:-1,스카디:5",
+      "feeling": "idle",
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 38,
+      "feeling": "idle2"
+    },
+    {
+      "id": 39,
+      "feeling": "idle",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 40,
+      "characterlist": "이상:3",
+      "feeling": "angry",
+      "soundeffect": "SFX_Cotton_Crumble_SoftNew"
+    },
+    {
+      "id": 41,
+      "feeling": "idle2",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 42,
+      "characterlist": "ALL:-1,그레고르:3,아미야:5",
+      "feeling": "smile2",
+      "emotion": "Sweat"
+    },
+    {
+      "id": 43,
+      "feeling": "shock",
+      "soundeffect": "SFX_Walk_Iron_Once"
+    },
+    {
+      "id": 44,
+      "characterlist": "이스마엘:9",
+      "soundeffect": "SFX_Jean_Crumble_Light"
+    },
+    {
+      "id": 45,
+      "characterlist": "ALL : -1, 스카디:5",
+      "feeling": "idle",
+      "soundeffect": "SFX_Cloth_Crumble"
+    },
+    {
+      "id": 46
+    },
+    {
+      "id": 47,
+      "soundeffect": "SFX_Walk_Dirt, SFX_Walk_Stone:delay=0.2, SFX_Walk_Marble:delay=0.3"
+    }
+  ]
+}
